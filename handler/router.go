@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"github.com/faelp22/tcs_curso/stoq/pkg/service"
+	"github.com/Racrivelari/ProjetoGolangOFICIAL/deposito/pkg/service"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 )

@@ -1,4 +1,4 @@
-module github.com/faelp22/tcs_curso/stoq
+module "github.com/Racrivelari/ProjetoGolangOFICIAL/deposito"
 
 go 1.19
 

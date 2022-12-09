@@ -2,8 +2,7 @@ package database
 
 import (
 	"database/sql"
-	"github.com/faelp22/tcs_curso/projetogolangcerto/config"
-	"stoq/config"
+	"github.com/Racrivelari/ProjetoGolangOFICIAL/deposito/config"
 )
 
 type DatabaseInterface interface {

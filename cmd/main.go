@@ -5,30 +5,26 @@ import (
 	"net/http"
 	"os"
 	"log"
-	"github.com/faelp22/tcs_curso/stoq/config"
-	"github.com/faelp22/tcs_curso/stoq/handler"
-	"github.com/faelp22/tcs_curso/stoq/pkg/database"
+	"github.com/Racrivelari/ProjetoGolangOFICIAL/deposito/config"
+	"github.com/Racrivelari/ProjetoGolangOFICIAL/deposito/handler"
+	"github.com/Racrivelari/ProjetoGolangOFICIAL/deposito/pkg/database"
+	"github.com/Racrivelari/ProjetoGolangOFICIAL/deposito/pkg/service"
+	
 	// lhttp "github.com/faelp22/tcs_curso/stoq/pkg/http"
-	"github.com/faelp22/tcs_curso/stoq/pkg/service"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 )
 
 func main() {
 	default_conf := &config.DBConfig{}    //aq nao ta puxando
-	println("A",default_conf.DB_DRIVE)
+	println("Driver Database: ",default_conf.DB_DRIVE)
 
 	if file_config := os.Getenv("STOQ_CONFIG"); file_config != "" {
 		file, _ := os.ReadFile(file_config)
 		_ = json.Unmarshal(file, &default_conf)
 	}
 
-	// conf := config.NewConfig(default_conf)
-	// println("b",default_conf.DB_DRIVE)
 	dbpool := database.NewDB(default_conf)
-
-	// dbpool := database.NewDB(conf)
-	println("c",default_conf.DB_DRIVE)  //n chega aq
 
 	service := service.NewProdutoService(dbpool)
 

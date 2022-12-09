@@ -3,8 +3,8 @@ package service
 import (
 	"fmt"
 	"log"
-	"github.com/faelp22/tcs_curso/stoq/entity"
-	"github.com/faelp22/tcs_curso/stoq/pkg/database"
+	"github.com/Racrivelari/ProjetoGolangOFICIAL/deposito/entity"
+	"github.com/Racrivelari/ProjetoGolangOFICIAL/deposito/pkg/database"
 )
 
 type ProdutoServiceInterface interface {
