@@ -9,6 +9,7 @@ import (
 func RegisterAPIHandlers(r *mux.Router, n *negroni.Negroni, service service.ProdutoServiceInterface) {
 
 	api := r.PathPrefix("/api/v1").Subrouter()
+	n.Use(applicationJSON())
 
 	api.Handle("/user/login", n.With(
 	)).Methods("POST", "OPTIONS")

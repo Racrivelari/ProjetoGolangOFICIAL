@@ -7,7 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func MySQLConn(conf *config.DBConfig) *dabase_pool { //nao ta chegando config aq
+func MySQLConn(conf *config.Config) *dabase_pool { 
 
 	if dbpool != nil && dbpool.DB != nil {
 		return dbpool

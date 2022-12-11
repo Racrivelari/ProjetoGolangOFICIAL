@@ -13,7 +13,7 @@ type Product struct { //NOME DE VARIAVEL TEM Q SER MAISUCULA POR CAUSA DO JSON
 	ID        int `json:"id"`
 	Name      string `json:"name"`
 	Price     float64 `json:"price"`
-	Code      string `json:"code"`
+	Code      string  `json:"code"`
 	CreatedAt string `json:"created_at,omitempty"`
 }
 
@@ -44,11 +44,11 @@ func (pl ProdutoList) String() string {
 	return string(data)
 }
 
-func NewProduto(nome, code string, price float64) *Product {
+func NewProduto(nome string, price float64, code string,) *Product {
 	return &Product{
 		Name:  nome,
-		Code:  code,
 		Price: price,
+		Code:  code,
 	}
 }
 

@@ -28,7 +28,7 @@ func NewProdutoService(dabase_pool database.DatabaseInterface) *produto_service 
 func (ps *produto_service) GetAll() *entity.ProdutoList {
 	DB := ps.dbp.GetDB()
 
-	rows, err := DB.Query("SELECT id_prod, name_prod, price_prod, code_prod FROM Product")
+	rows, err := DB.Query("SELECT id, name, price, code FROM Product")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -40,7 +40,7 @@ func (ps *produto_service) GetAll() *entity.ProdutoList {
 	for rows.Next() {
 		p := entity.Product{}
 
-		if err := rows.Scan(&p.ID, &p.Name, &p.Code, &p.Price); err != nil {
+		if err := rows.Scan(&p.ID, &p.Name, &p.Price, &p.Code); err != nil {
 			fmt.Println(err.Error())
 		} else {
 			lista_produtos.List = append(lista_produtos.List, &p)
@@ -54,7 +54,7 @@ func (ps *produto_service) GetByID(ID *int64) *entity.Product {
 	
 	DB := ps.dbp.GetDB()
 
-	stmt, err := DB.Prepare("SELECT id_prod, name_prod, price_prod, code_prod FROM Product where id_prod = ?")
+	stmt, err := DB.Prepare("SELECT id, name, price, code FROM Product where id = ?")
 	// stmt, err := DB.Prepare("SELECT id_prod, name_prod, price_prod, code_prod FROM Product where id_prod = ?", ID)
 	if err != nil {
 		log.Println(err.Error())
@@ -64,7 +64,7 @@ func (ps *produto_service) GetByID(ID *int64) *entity.Product {
 
 	p := entity.Product{}
 
-	err = stmt.QueryRow(ID).Scan(&p.ID, &p.Name, &p.Code, &p.Price)
+	err = stmt.QueryRow(ID).Scan(&p.ID, &p.Name, &p.Price, &p.Code)
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -74,14 +74,14 @@ func (ps *produto_service) GetByID(ID *int64) *entity.Product {
 func (ps *produto_service) Create(produto *entity.Product) int64 {
 	DB := ps.dbp.GetDB()
 
-	stmt, err := DB.Prepare("INSERT INTO Product (name_prod, price_prod, code_prod) values (?, ?, ?)")
+	stmt, err := DB.Prepare("INSERT INTO Product (name, price, code) values (?, ?, ?)")
 	if err != nil {
 		log.Println(err.Error())
 	}
 
 	defer stmt.Close()
 
-	result, err := stmt.Exec(produto.Name, produto.Code, produto.Price)
+	result, err := stmt.Exec(produto.Name, produto.Price, produto.Code)
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -97,14 +97,14 @@ func (ps *produto_service) Create(produto *entity.Product) int64 {
 func (ps *produto_service) Update(ID *int64, produto *entity.Product) int64 {
 	DB := ps.dbp.GetDB()
 
-	stmt, err := DB.Prepare("UPDATE Product SET name_prod = ?, price_prod = ? where id_prod = ?")
+	stmt, err := DB.Prepare("UPDATE Product SET name = ?, price = ? where id = ?")
 	if err != nil {
 		log.Println(err.Error())
 	}
 
 	defer stmt.Close()
 
-	result, err := stmt.Exec(produto.Name, produto.Code, produto.Price, ID)
+	result, err := stmt.Exec(produto.Name, produto.Price, ID)
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -120,7 +120,7 @@ func (ps *produto_service) Update(ID *int64, produto *entity.Product) int64 {
 func (ps *produto_service) Delete(ID *int64) int64 {
 	DB := ps.dbp.GetDB()
 
-	stmt, err := DB.Prepare("DELETE FROM Logs where id_prod = ?")
+	stmt, err := DB.Prepare("DELETE FROM Logs where id = ?")
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -129,7 +129,7 @@ func (ps *produto_service) Delete(ID *int64) int64 {
 
 	stmt.Exec(ID)
 
-	stmt2, err := DB.Prepare("DELETE FROM Product where id_prod = ?")
+	stmt2, err := DB.Prepare("DELETE FROM Product where id = ?")
 	if err != nil {
 		log.Println(err.Error())
 	}

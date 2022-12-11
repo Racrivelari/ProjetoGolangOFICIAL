@@ -16,21 +16,17 @@ type dabase_pool struct {
 
 var dbpool = &dabase_pool{}
 
-func NewDB(conf *config.DBConfig) *dabase_pool {
-	println(conf.DB_DRIVE)
+func NewDB(conf *config.Config) *dabase_pool {
 	dbpool = MySQLConn(conf)
 	return dbpool
 }
 
 func (d *dabase_pool) Close() error {
-
 	err := d.DB.Close()
 	if err != nil {
 		return err
 	}
-
 	dbpool = &dabase_pool{}
-
 	return err
 }
 

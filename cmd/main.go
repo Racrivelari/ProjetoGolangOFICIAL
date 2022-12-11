@@ -2,31 +2,34 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 	"os"
-	"log"
+
 	"github.com/Racrivelari/ProjetoGolangOFICIAL/deposito/config"
 	"github.com/Racrivelari/ProjetoGolangOFICIAL/deposito/handler"
 	"github.com/Racrivelari/ProjetoGolangOFICIAL/deposito/pkg/database"
 	"github.com/Racrivelari/ProjetoGolangOFICIAL/deposito/pkg/service"
-	
-	// lhttp "github.com/faelp22/tcs_curso/stoq/pkg/http"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 )
 
 func main() {
-	default_conf := &config.DBConfig{}    //aq nao ta puxando
-	println("Driver Database: ",default_conf.DB_DRIVE)
+	default_conf := &config.Config{}
 
 	if file_config := os.Getenv("STOQ_CONFIG"); file_config != "" {
 		file, _ := os.ReadFile(file_config)
 		_ = json.Unmarshal(file, &default_conf)
 	}
 
-	dbpool := database.NewDB(default_conf)
+	conf := config.NewConfig(default_conf)
 
+	dbpool := database.NewDB(conf)
 	service := service.NewProdutoService(dbpool)
+
+	println(conf.DB_DRIVE)
+	println(conf.DB_DSN)
 
 	r := mux.NewRouter()
 	n := negroni.New(
@@ -34,9 +37,8 @@ func main() {
 	)
 
 	r.HandleFunc("/", redirect)
-
 	handler.RegisterAPIHandlers(r, n, service)
-
+	fmt.Println("Escutando na porta 5000")
 	log.Fatal(http.ListenAndServe(":5000", r))
 }
 
