@@ -49,7 +49,7 @@ func main() {
 	//DEU CERTO COM ESSE JEITO DO ISAEL AQ, funcionou o frontend, e tipo, eu tento logar ele da uma msg verde de "bem vindo admin" porem n redireciona pra home n sei pq
 	//outro ponto, eu tirei a main da pasta raiz e joguei pra cmd dnv, ele voltou a funcionar nao faco ideia pq KKKKKKKKKKKKKKK
 
-	//VC PODE PULAR A TELA DE LOGIN, VC COLOCA O ENDERECO/PRODUCTS, dai pula
+	//VC PODE PULAR A TELA DE LOGIN, VC COLOCA O ENDERECO/PRODUCTS, dai pula, mas n funciona o front, porem ele puxa a lista de produtos
 
 }
 
