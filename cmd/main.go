@@ -2,8 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
-
+	// "fmt"
 	// "log"
 	"net/http"
 	"os"
@@ -39,8 +38,6 @@ func main() {
 
 	r.HandleFunc("/", redirect)
 	handler.RegisterAPIHandlers(r, n, service)
-	fmt.Println("Escutando na porta 5000")
-	//log.Fatal(http.ListenAndServe(":5000", r))
 
 	fs := http.FileServer(http.Dir("webui/dist/spa"))
 	r.Handle("/webui/", http.StripPrefix("/webui/", fs)) //aq vc passa o r inves do http.handle, pq vc criou suas proprias rotas no router, ou seja vc n ta usando padrao go e sim um proprio
